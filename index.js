@@ -2,11 +2,13 @@ var http = require("http");
 var express = require("express");
 var mongodb = require("mongodb");
 var bodyParser = require("body-parser");
+//var dotenv = require("dotenv");
+//dotenv.load();
 
 var app = express();
 var mongoClient = mongodb.MongoClient;
 var port = process.env.PORT || 5000;
-var dburl = "mongodb://localhost:27017/testdb";
+var dburl = process.env.MONGO_URI;
 
 
 function getShortUrl(db,urls,url,response) {

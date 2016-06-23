@@ -1,6 +1,7 @@
+var http = require("http");
 var express = require("express");
-var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
+var bodyParser = require("body-parser");
 
 var app = express();
 var mongoClient = mongodb.MongoClient;
@@ -36,7 +37,18 @@ function getShortUrl(db,urls,url,response) {
             getShortUrl(db,urls);
         }
     });
-}
+};
+
+/*
+
+var server = http.createServer(function (req,res) {
+    console.log(req.url);
+});
+
+server.listen(port, function() {
+    console.log("App listening on port " + port);
+});
+*/
 
 app.use(bodyParser.urlencoded({
     extended: false
@@ -83,8 +95,11 @@ app.get("/:SHORT", function(request, response) {
     }
 });
 
-app.get("/new/:FULLURL", function(request, response) {
-    var url = request.params.FULLURL;
+app.get("*", function(request, response) {
+    
+    if (request.url.indexOf("/new/") > -1)
+    {
+        var url = request.url.replace("/new/","");
 
     mongoClient.connect(dburl, function(err, db) {
         if (err) {
@@ -97,10 +112,11 @@ app.get("/new/:FULLURL", function(request, response) {
             getShortUrl(db,urls,url,response);
         }
     });
-});
-
-app.get("*", function(request, response) {
-    response.end("404!");
+    }
+    else {
+        response.send("404!");
+    }
+    
 });
 
 app.listen(port, function() {

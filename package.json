@@ -1,0 +1,27 @@
+{
+  "name": "urlshortener",
+  "version": "1.0.0",
+  "description": "shortens and stores urls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VTmoorek1/urlshortener.git"
+  },
+  "keywords": [
+    "url"
+  ],
+  "author": "KMM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VTmoorek1/urlshortener/issues"
+  },
+  "homepage": "https://github.com/VTmoorek1/urlshortener#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.1.18"
+  }
+}

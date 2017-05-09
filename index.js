@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require("express");
 var mongodb = require("mongodb");
 var bodyParser = require("body-parser");
@@ -10,7 +12,29 @@ var port = process.env.PORT || 5000;
 var dburl = process.env.MONGO_URI;
 
 
+class URL {
+    
+    
+    
+    constructor() {
+        this.url = "";
+        var pMethod = "";
+    };
+    
+    /*getarea = function () {
+        
+    };*/
+};
+
+function getRandomIP()
+{
+    var randomIP = Math.floor(Math.random() * (255 - 1)) + 1;
+    return randomIP;
+}
+
 function getShortUrl(db, urls, url, response) {
+
+    
 
     // CHECK IF SHORTURL EXISTS FOR FULLURL FIRST
     urls.findOne({
@@ -69,7 +93,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-app.get("/:SHORT", function(request, response) {
+app.get("/short/:SHORT", function(request, response) {
     var shortUrl = request.params.SHORT;
     var shortIntUrl = parseInt(shortUrl);
     console.log(request.url);
@@ -107,6 +131,21 @@ app.get("/:SHORT", function(request, response) {
     else {
         response.send("Invalid shortened URL");
     }
+});
+
+app.get("/random", function (request,response) {
+   
+   var ip = "";
+   
+   for (var i = 0; i < 4; i++)
+   {
+       ip += getRandomIP() + ".";
+   }
+   
+   ip = ip.substring(0,ip.length-1);
+   
+   response.send({"random":ip});
+    
 });
 
 app.get("*", function(request, response) {
